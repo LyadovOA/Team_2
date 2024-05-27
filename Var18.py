@@ -50,8 +50,8 @@ def prepare_data(passenger_data):
     return passenger_data
 
 
-def main():
-    st.image('titaniс.jpg')
+def do_var18():
+    
     st.subheader('Максимальный возрат выживших по пунктам посадки пассажиров Титаника')
     slider = st.slider(
         'максимальный возраст',
@@ -74,4 +74,4 @@ def main():
     plt.title('Доля выживших пассажиров')
     plt.legend()
     st.pyplot(fig)
-main()
+do_var18()
