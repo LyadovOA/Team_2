@@ -10,7 +10,7 @@ from var1 import do_var1
 #from var5 import do_var5
 from var8 import do_var8
 from var10 import do_var10
-from var18 import do_var18
+from Var18 import do_var18
 #from var15 import do_var15
 
 if choice == 'вариант 1':
