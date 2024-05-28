@@ -1,7 +1,7 @@
 import streamlit as st
 
 st.header('Практическое занятие №11')
-st.image('Titanic.jpg')
+st.image('titanic.jpg')
 st.header('Команда №2 ')
 
 choice = st.selectbox('Вариант номер:',  ['вариант 1','вариант 8','вариант 10', 'вариант 18'])
