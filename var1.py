@@ -32,7 +32,7 @@ def counter(dc, survived='Любое', sex='Любой'):
 def do_var1():
 
     st.header('Данные пассажиров Титаника')
-    st.image('titanic.jpg')
+    #st.image('titanic.jpg')
 
     st.write('Для просмотра данных только по спасенным или погибщим пассажирам, выберите соответствующий пункт из списка')
     survived = st.selectbox('Значение поля Survived:', ['Любое', 'Спасен (1)', 'Погиб (0)'])
