@@ -35,13 +35,13 @@ def count_survivors(filter):
                     result['Выжившие'].append(1 if survived else 0)
     return result
 
-
 def prepare_data(passenger_data):
     passenger_data['Доля выживших'] = []
     for v1, v2 in zip(passenger_data['Возраст пассажиров'], passenger_data['Выжившие']):
-        passenger_data['Доля выживших'].append(
-            round(v2 / v1 * 100)
-        )
+        if v1 == 0:
+            passenger_data['Доля выживших'].append(0)
+        else:
+            passenger_data['Доля выживших'].append(round(v2 / v1 * 100))
     passenger_data.pop('Возраст пассажиров')
     passenger_data.pop('Выжившие')
     passenger_data['Пункт посадки'][passenger_data['Пункт посадки'].index('S')] = 'Саутгемптон'
@@ -51,7 +51,6 @@ def prepare_data(passenger_data):
 
 
 def do_var18():
-    
     st.subheader('Максимальный возрат выживших по пунктам посадки пассажиров Титаника')
     slider = st.slider(
         'максимальный возраст',
@@ -74,4 +73,6 @@ def do_var18():
     plt.title('Доля выживших пассажиров')
     plt.legend()
     st.pyplot(fig)
+
+
 do_var18()
