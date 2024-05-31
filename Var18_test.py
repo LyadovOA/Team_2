@@ -1,7 +1,7 @@
 import pytest
 from main import count_survivors, prepare_data
 
-# Тест на правильное переименование пунктов посадки
+#Тест на правильное переименование пунктов посадки
 def test_1():
     passenger_data = {
         'Пункт посадки': ['S', 'Q', 'C'],
