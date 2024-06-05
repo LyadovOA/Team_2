@@ -1,4 +1,4 @@
-from main import counter
+from var1 import counter
 
 def test_true():
     assert True
