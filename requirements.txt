@@ -1,3 +1,2 @@
-streamlit
-pytest
-matplotlib
+streamlit==1.34.0
+matplotlib==3.9.0

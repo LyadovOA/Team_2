@@ -1,4 +1,4 @@
-from main import get_pass_count
+from var8 import get_pass_count
 
 
 def test_true_count_ordinary():
