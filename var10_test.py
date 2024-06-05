@@ -1,5 +1,5 @@
 import pytest
-from main import get_group_func
+from var10 import get_group_func
 # №1 Тест для проверки корректного подсчета средней цены для мужчин и женщин
 def test_avgFares():
     lines = [
