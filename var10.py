@@ -8,9 +8,9 @@ def get_group_func(lines):
     for line in lines:
         data = line.strip().split(",")
         sex = data[5]
-        fare_str = data[10].strip()  # Удаляем лишние пробелы
+        fare_str = data[10].strip()  
 
-        if fare_str:  # Проверяем, что строка не пустая
+        if fare_str:  
             fare = float(fare_str)
             if sex == 'male':
                 male_fares.append(fare)
