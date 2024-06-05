@@ -1,3 +1,4 @@
+import pytest
 from var8 import get_pass_count
 
 
@@ -6,7 +7,8 @@ def test_true_count_ordinary():
              "1,1,2,3,4,male",
              "2,1,2,3,4,male",
              "3,1,2,3,4,female"]
-    assert get_pass_count(lines) == ({'Мужчин': 2, 'Женщин': 1})
+    # Передаем аргумент 'choise' равный 'Всего'
+    assert get_pass_count(lines, 'Всего') == {'Мужчин': 2, 'Женщин': 1}
 
 
 def test_true_count_works():
@@ -14,20 +16,21 @@ def test_true_count_works():
              '13,0,3,"Saundercock, Mr. William Henry",male,20,0,0,A/5. 2151,8.05,,S',
              '14,0,3,"Andersson, Mr. Anders Johan",male,39,1,5,347082,31.275,,S',
              '16,1,2,"Hewlett, Mrs. (Mary D Kingcome) ",female,55,0,0,248706,16,,S']
-    assert get_pass_count(lines) == ({'Мужчин': 3, 'Женщин': 1})
+    # Передаем аргумент 'Всего'
+    assert get_pass_count(lines, 'Всего') == {'Мужчин': 3, 'Женщин': 1}
 
-
-def test_true_cont_works2():
+def test_true_count_works2():
     lines = ['92,0,3,"Andreasson, Mr. Paul Edvin",male,20,0,0,347466,7.8542,,S',
              '93,0,1,"Chaffee, Mr. Herbert Fuller",male,46,1,0,W.E.P. 5734,61.175,E31,S',
              '96,0,3,"Shorney, Mr. Charles Joseph",male,,0,0,374910,8.05,,S',
              '100,0,2,"Kantor, Mr. Sinai",male,34,1,0,244367,26,,S']
-    assert get_pass_count(lines) == ({'Мужчин': 4, 'Женщин': 0})
-
+    # Передаем аргумент 'Всего'
+    assert get_pass_count(lines, 'Всего') == {'Мужчин': 4, 'Женщин': 0}
 
 def test_true_cyr():
     lines = ['0,1,2,3,4,Age',
-           '1,1,2,3,4,male',
+             '1,1,2,3,4,male',
              '2,1,2,3,4,жен',
              '3,1,2,3,4,муж']
-    assert get_pass_count(lines) == ({'Мужчин': 1, 'Женщин': 2})
+    # Передаем аргумент 'Всего'
+    assert get_pass_count(lines, 'Всего') == {'Мужчин': 1, 'Женщин': 2}
