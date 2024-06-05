@@ -1,5 +1,5 @@
 import pytest
-from main import calculate_survival_rates
+from Var18 import calculate_survival_rates
 
 # Тестовые данные
 test_data_1 = [
