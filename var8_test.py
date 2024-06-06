@@ -1,36 +1,55 @@
-import pytest
-from var8 import get_pass_count
+import matplotlib.pyplot as plt
+import streamlit as st
 
 
-def test_true_count_ordinary():
-    lines = ["0,1,2,3,4,Age",
-             "1,1,2,3,4,male",
-             "2,1,2,3,4,male",
-             "3,1,2,3,4,female"]
-    # Передаем аргумент 'choise' равный 'Всего'
-    assert get_pass_count(lines, 'Всего') == {'Мужчин': 2, 'Женщин': 1}
+def get_pass_count(lines, choice):
+    res = {'Мужчин': 0, 'Женщин': 0}
+    for line in lines:
+        d = line.split(',')
+        sex = d[5]
+        pclass = d[2]
+        if choice == "Всего":
+            if sex in {'Мужчин', 'Женщин'}:
+                res[sex] += 1
+            if sex == 'Age':
+                continue
+            if sex == 'male':
+                res['Мужчин'] += 1
+            else:
+                res['Женщин'] += 1
+        elif choice == "1 класс" and pclass == '1':
+            if sex == 'male':
+                res['Мужчин'] += 1
+            else:
+                res['Женщин'] += 1
+        elif choice == "2 класс" and pclass == '2':
+            if sex == 'male':
+                res['Мужчин'] += 1
+            else:
+                res['Женщин'] += 1
+        elif choice == "3 класс" and pclass == '3':
+            if sex == 'male':
+                res['Мужчин'] += 1
+            else:
+                res['Женщин'] += 1
+    return res
 
 
-def test_true_count_works():
-    lines = ['6,0,3,"Moran, Mr. James",male,,0,0,330877,8.4583,,Q',
-             '13,0,3,"Saundercock, Mr. William Henry",male,20,0,0,A/5. 2151,8.05,,S',
-             '14,0,3,"Andersson, Mr. Anders Johan",male,39,1,5,347082,31.275,,S',
-             '16,1,2,"Hewlett, Mrs. (Mary D Kingcome) ",female,55,0,0,248706,16,,S']
-    # Передаем аргумент 'Всего'
-    assert get_pass_count(lines, 'Всего') == {'Мужчин': 3, 'Женщин': 1}
+def do_var8():
+    st.title('Вариант 8')
 
-def test_true_count_works2():
-    lines = ['92,0,3,"Andreasson, Mr. Paul Edvin",male,20,0,0,347466,7.8542,,S',
-             '93,0,1,"Chaffee, Mr. Herbert Fuller",male,46,1,0,W.E.P. 5734,61.175,E31,S',
-             '96,0,3,"Shorney, Mr. Charles Joseph",male,,0,0,374910,8.05,,S',
-             '100,0,2,"Kantor, Mr. Sinai",male,34,1,0,244367,26,,S']
-    # Передаем аргумент 'Всего'
-    assert get_pass_count(lines, 'Всего') == {'Мужчин': 4, 'Женщин': 0}
+    st.header('Данные пассажиров Титаника')
+    st.write("Для просмотра данных по количеству пассажиров каждого пола по указанному классу обслуживания, выберите соответствующий пункт из списка")
+    choice = st.selectbox("Укажите класс обслуживания:", ["Всего", "1 класс", "2 класс", "3 класс"])
 
-def test_true_cyr():
-    lines = ['0,1,2,3,4,Age',
-             '1,1,2,3,4,male',
-             '2,1,2,3,4,жен',
-             '3,1,2,3,4,муж']
-    # Передаем аргумент 'Всего'
-    assert get_pass_count(lines, 'Всего') == {'Мужчин': 1, 'Женщин': 2}
+    with open('data.csv') as file:
+        lines = file.readlines()
+        res = get_pass_count(lines, choice)
+
+    st.dataframe(res)
+    fig = plt.figure(figsize=(10, 5))
+    plt.bar(['Мужчин', 'Женщин'], [res['Мужчин'], res['Женщин']])
+    st.pyplot(fig)
+
+
+do_var8()
