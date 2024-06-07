@@ -37,18 +37,20 @@ def get_pass_count(lines, choice):
 
 def do_var8():
     st.title('Вариант 8')
-
     st.header('Данные пассажиров Титаника')
-    st.write("Для просмотра данных по количеству пассажиров каждого пола по указанному классу обслуживания, выберите соответствующий пункт из списка")
-    choice = st.selectbox("Укажите класс обслуживания:", ["Всего", "1 класс", "2 класс", "3 класс"])
+    st.write("Для просмотра данных по количеству пассажиров каждого пола "
+             "по указанному классу обслуживания, выберите соответствующий "
+             "пункт из списка")
+    choice = st.selectbox("Укажите класс обслуживания:", 
+                          ["Всего", "1 класс", "2 класс", "3 класс"])
 
     with open('data.csv') as file:
         lines = file.readlines()
-        res = get_pass_count(lines, choice)
+    res = get_pass_count(lines, choice)
 
     st.dataframe(res)
     fig = plt.figure(figsize=(10, 5))
-    plt.bar(['Мужчин', 'Женщин'], [res['Мужчин'], res['Женщин']])
+    plt.bar(list(res.keys()), list(res.values()))
     st.pyplot(fig)
 
 
