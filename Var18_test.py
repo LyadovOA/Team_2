@@ -1,4 +1,3 @@
-import pytest
 from Var18 import calculate_survival_rates
 
 # Тестовые данные
