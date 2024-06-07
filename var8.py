@@ -4,34 +4,19 @@ import streamlit as st
 
 def get_pass_count(lines, choice):
     res = {'Мужчин': 0, 'Женщин': 0}
-    for line in lines:
-        d = line.split(',')
-        sex = d[5]
-        pclass = d[2]
-        if choice == "Всего":
-            if sex in {'Мужчин', 'Женщин'}:
-                res[sex] += 1
-            if sex == 'Age':
+    class_map = {'Всего': ['1', '2', '3'], '1 класс': ['1'], '2 класс': ['2'], '3 класс': ['3']}
+    if choice in class_map:
+        for line in lines:
+            data = line.strip().split(',')
+            if len(data) < 6 or data[5] not in ['male', 'female']:
                 continue
-            if sex == 'male':
-                res['Мужчин'] += 1
-            else:
-                res['Женщин'] += 1
-        elif choice == "1 класс" and pclass == '1':
-            if sex == 'male':
-                res['Мужчин'] += 1
-            else:
-                res['Женщин'] += 1
-        elif choice == "2 класс" and pclass == '2':
-            if sex == 'male':
-                res['Мужчин'] += 1
-            else:
-                res['Женщин'] += 1
-        elif choice == "3 класс" and pclass == '3':
-            if sex == 'male':
-                res['Мужчин'] += 1
-            else:
-                res['Женщин'] += 1
+            sex, pclass = data[5], data[2]
+            if pclass in class_map[choice]:
+                if sex == 'male':
+                    res['Мужчин'] += 1
+                elif sex == 'female':
+                    res['Женщин'] += 1
+
     return res
 
 
