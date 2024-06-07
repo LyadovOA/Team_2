@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import streamlit as st
 import csv
 
+
 def counter(dc, survived='Любое', sex='Любой'):
     min_age = 200  # Гарантированно завышенное значение
     max_age = 0  # Гарантированно заниженное значение
@@ -29,10 +30,10 @@ def counter(dc, survived='Любое', sex='Любой'):
 
     return min_age, max_age
 
+
 def do_var1():
 
     st.header('Данные пассажиров Титаника')
-    #st.image('titanic.jpg')
 
     st.write('Для просмотра данных только по спасенным или погибщим пассажирам, выберите соответствующий пункт из списка')
     survived = st.selectbox('Значение поля Survived:', ['Любое', 'Спасен (1)', 'Погиб (0)'])
@@ -60,5 +61,6 @@ def do_var1():
     plt.title('Возраст пассажиров')
 
     st.pyplot(fig)
+
 
 do_var1()
