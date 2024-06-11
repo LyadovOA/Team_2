@@ -40,9 +40,9 @@ with open(data_file, newline='') as csvfile:
 
 
 def do_var18():
-    st.header('Максимальный возраст выживших по пунктам посадки пассажиров Титаника')
+    st.header('Возраст выживших пассажиров Титаника по пунктам посадки ')
     max_age = st.slider(
-        'Выберите максимальный возраст для анализа выживаемости',
+        'Переместите ползунок для выбора возраста выживших',
         min_value=0, max_value=100, value=30
     )
 
@@ -52,7 +52,7 @@ def do_var18():
         for embarked, rate in survival_rate_age.items() if rate != 100.00
     ]
 
-    st.subheader('Доля выживших пассажиров по пунктам посадки и выбранному возрасту:')
+    st.header('Доля выживших пассажиров по пунктам посадки и по выбранному возрасту:')
     st.table(prepared_data)
 
     # Создание графика
@@ -61,7 +61,7 @@ def do_var18():
     survival_rate = [row['Доля выживших'] for row in prepared_data]
 
     plt.bar(embarked, survival_rate, width=0.3, label='Доля выживших')
-    plt.xlabel('Пункт посадки')
+    plt.xlabel('порт Саутгемптон                                         порт Квинстаун                                             порт Шербур')
     plt.ylabel('Доля выживших (%)')
     plt.title('Доля выживших пассажиров Титаника по пунктам посадки')
     plt.legend()
