@@ -35,7 +35,6 @@ with open("data.csv") as file:
 
 
 def do_var10():
-
     st.header('Данные пассажиров Титаника')
     st.write("Для просмотра данных о стоимости билетов, выберите пункт из списка.")
     selected = st.selectbox(
@@ -43,44 +42,21 @@ def do_var10():
         ['Средняя цена', 'Максимальная цена', 'Минимальная цена']
     )
 
-    if selected == 'Средняя цена':
-        average_fare = [avg_fares['male_avg_fare'], avg_fares['female_avg_fare']]
-        sex = ['Мужчины', 'Женщины']
-        data = {'Пол': sex, 'Цена': average_fare}
-        st.table(data)
+    fare_types = {'Средняя цена': 'avg', 'Максимальная цена': 'max', 'Минимальная цена': 'min'}
+    selected_fare_type = fare_types[selected]
+    fares = get_group_func(lines, selected_fare_type)
 
-        fig = plt.figure(figsize=(10, 5))
-        plt.bar(sex, average_fare, color=['blue', 'pink'])
-        plt.xlabel('Пол')
-        plt.ylabel('Цена')
-        plt.title('Средняя стоимость билетов')
-        st.pyplot(fig)
+    male_fare, female_fare = fares
+    sex = ['Мужчины', 'Женщины']
+    data = {'Пол': sex, 'Цена': [male_fare, female_fare]}
+    st.dataframe(data)
 
-    elif selected == 'Максимальная цена':
-        max_fare = [max_fares['male_max_fare'], max_fares['female_max_fare']]
-        sex = ['Мужчины', 'Женщины']
-        data = {'Пол': sex, 'Цена': max_fare}
-        st.table(data)
-
-        fig = plt.figure(figsize=(10, 5))
-        plt.bar(sex, max_fare, color=['blue', 'pink'])
-        plt.xlabel('Пол')
-        plt.ylabel('Цена')
-        plt.title('Максимальная стоимость билетов')
-        st.pyplot(fig)
-
-    elif selected == 'Минимальная цена':
-        min_fare = [min_fares['male_min_fare'], min_fares['female_min_fare']]
-        sex = ['Мужчины', 'Женщины']
-        data = {'Пол': sex, 'Цена': min_fare}
-        st.table(data)
-
-        fig = plt.figure(figsize=(10, 5))
-        plt.bar(sex, min_fare, color=['blue', 'pink'])
-        plt.xlabel('Пол')
-        plt.ylabel('Цена')
-        plt.title('Минимальная стоимость билетов')
-        st.pyplot(fig)
+    fig = plt.figure(figsize=(10, 5))
+    plt.bar(sex, [male_fare, female_fare], color=['blue', 'pink'])
+    plt.xlabel('Пол')
+    plt.ylabel('Цена')
+    plt.title(f'{selected} стоимости билетов')
+    st.pyplot(fig)
 
 
 do_var10()
