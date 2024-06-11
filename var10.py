@@ -2,8 +2,7 @@ import matplotlib.pyplot as plt
 import streamlit as st
 
 
-def get_group_func(lines):
-
+def get_group_func(lines, choice):
     male_fares = []
     female_fares = []
 
@@ -18,30 +17,24 @@ def get_group_func(lines):
             elif sex == 'female':
                 female_fares.append(fare)
 
-    male_avg_fare = sum(male_fares) / len(male_fares) if male_fares else 0
-    female_avg_fare = sum(female_fares) / len(female_fares) if female_fares else 0
+    statistics = {
+        'avg': (sum(male_fares) / len(male_fares) if male_fares else 0,
+                sum(female_fares) / len(female_fares) if female_fares else 0),
+        'min': (min(male_fares) if male_fares else 0,
+                min(female_fares) if female_fares else 0),
+        'max': (max(male_fares) if male_fares else 0,
+                max(female_fares) if female_fares else 0)
+    }
 
-    male_min_fare = min(male_fares) if male_fares else 0
-    female_min_fare = min(female_fares) if female_fares else 0
-
-    male_max_fare = max(male_fares) if male_fares else 0
-    female_max_fare = max(female_fares) if female_fares else 0
-
-    avg_fares = {'male_avg_fare': male_avg_fare, 'female_avg_fare': female_avg_fare}
-    min_fares = {'male_min_fare': male_min_fare, 'female_min_fare': female_min_fare}
-    max_fares = {'male_max_fare': male_max_fare, 'female_max_fare': female_max_fare}
-
-    return avg_fares, min_fares, max_fares
+    return statistics[choice]
 
 
 with open("data.csv") as file:
-    next(file)  # Пропускаем заголовок
+    next(file)
     lines = file.readlines()
-    avg_fares, min_fares, max_fares = get_group_func(lines)
 
 
 def do_var10():
-
     st.header('Данные пассажиров Титаника')
     st.write("Для просмотра данных о стоимости билетов, выберите пункт из списка.")
     selected = st.selectbox(
@@ -49,44 +42,21 @@ def do_var10():
         ['Средняя цена', 'Максимальная цена', 'Минимальная цена']
     )
 
-    if selected == 'Средняя цена':
-        average_fare = [avg_fares['male_avg_fare'], avg_fares['female_avg_fare']]
-        sex = ['Мужчины', 'Женщины']
-        data = {'Пол': sex, 'Цена': average_fare}
-        st.table(data)
+    fare_types = {'Средняя цена': 'avg', 'Максимальная цена': 'max', 'Минимальная цена': 'min'}
+    selected_fare_type = fare_types[selected]
+    fares = get_group_func(lines, selected_fare_type)
 
-        fig = plt.figure(figsize=(10, 5))
-        plt.bar(sex, average_fare, color=['blue', 'pink'])
-        plt.xlabel('Пол')
-        plt.ylabel('Цена')
-        plt.title('Средняя стоимость билетов')
-        st.pyplot(fig)
+    male_fare, female_fare = fares
+    sex = ['Мужчины', 'Женщины']
+    data = {'Пол': sex, 'Цена': [male_fare, female_fare]}
+    st.dataframe(data)
 
-    elif selected == 'Максимальная цена':
-        max_fare = [max_fares['male_max_fare'], max_fares['female_max_fare']]
-        sex = ['Мужчины', 'Женщины']
-        data = {'Пол': sex, 'Цена': max_fare}
-        st.table(data)
-
-        fig = plt.figure(figsize=(10, 5))
-        plt.bar(sex, max_fare, color=['blue', 'pink'])
-        plt.xlabel('Пол')
-        plt.ylabel('Цена')
-        plt.title('Максимальная стоимость билетов')
-        st.pyplot(fig)
-
-    elif selected == 'Минимальная цена':
-        min_fare = [min_fares['male_min_fare'], min_fares['female_min_fare']]
-        sex = ['Мужчины', 'Женщины']
-        data = {'Пол': sex, 'Цена': min_fare}
-        st.table(data)
-
-        fig = plt.figure(figsize=(10, 5))
-        plt.bar(sex, min_fare, color=['blue', 'pink'])
-        plt.xlabel('Пол')
-        plt.ylabel('Цена')
-        plt.title('Минимальная стоимость билетов')
-        st.pyplot(fig)
+    fig = plt.figure(figsize=(10, 5))
+    plt.bar(sex, [male_fare, female_fare], color=['blue', 'pink'])
+    plt.xlabel('Пол')
+    plt.ylabel('Цена')
+    plt.title(f'{selected} стоимости билетов')
+    st.pyplot(fig)
 
 
 do_var10()
