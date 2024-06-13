@@ -40,7 +40,7 @@ with open(data_file, newline='') as csvfile:
 
 
 def do_var18():
-    st.header('Возраст выживших пассажиров Титаника по пунктам посадки ')
+    st.subheader('Возраст выживших пассажиров Титаника по пунктам посадки ')
     max_age = st.slider(
         'Переместите ползунок для выбора возраста выживших',
         min_value=0, max_value=100, value=30
@@ -52,7 +52,7 @@ def do_var18():
         for embarked, rate in survival_rate_age.items() if rate != 100.00
     ]
 
-    st.header('Доля выживших пассажиров по пунктам посадки и по выбранному возрасту:')
+    st.subheader('Доля выживших пассажиров по пунктам посадки и по выбранному возрасту:')
     st.table(prepared_data)
 
     # Создание графика
