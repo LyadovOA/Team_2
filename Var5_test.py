@@ -1,5 +1,4 @@
-import pytest
-from main import get_survived_pass
+from Var5 import get_survived_pass
 
 
 # Тестирование на корректность подсчета количества женщин, у которых не было братьев или сестер
